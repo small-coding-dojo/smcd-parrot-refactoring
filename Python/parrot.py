@@ -31,17 +31,22 @@ class Parrot:
         # todo: repeated switches smell - replace conditional w/ polymorphism
         match self._type:
             case ParrotType.EUROPEAN:
+                # todo: magic strings Sqoork, Sqaark,....
                 return "Sqoork!"
             case ParrotType.AFRICAN:
                 return "Sqaark!"
             case ParrotType.NORWEGIAN_BLUE:
+                # todo: if 0 is modified to 1 no test breaks (atleast 1 test case is missing)
                 return "Bzzzzzz" if self._voltage > 0 else "..."
 
     def _compute_base_speed_for_voltage(self, voltage):
+        # todo: magic number 24
         return min([24.0, voltage * self._base_speed()])
 
     def _load_factor(self):
+        # todo: magic number 9
         return 9.0
 
     def _base_speed(self):
+        # todo: magic number 12
         return 12.0
