@@ -7,6 +7,14 @@ class ParrotType(Enum):
     AFRICAN = 2
     NORWEGIAN_BLUE = 3
 
+def parrot_factory(type_of_parrot, number_of_coconuts, voltage, nailed):
+    match type_of_parrot:
+        case ParrotType.EUROPEAN:
+            return EuropeanParrot(number_of_coconuts, voltage, nailed)
+        case ParrotType.AFRICAN:
+            return AfricanParrot(number_of_coconuts, voltage, nailed)
+        case _:
+            return Parrot(type_of_parrot, number_of_coconuts, voltage, nailed)
 
 class Parrot:
 
@@ -16,6 +24,8 @@ class Parrot:
         self._number_of_coconuts = number_of_coconuts
         self._voltage = voltage
         self._nailed = nailed
+        
+
 
     def speed(self):
         # todo: repeated switches smell - replace conditional w/ polymorphism
@@ -30,11 +40,6 @@ class Parrot:
     def cry(self):
         # todo: repeated switches smell - replace conditional w/ polymorphism
         match self._type:
-            case ParrotType.EUROPEAN:
-                # todo: magic strings Sqoork, Sqaark,....
-                return "Sqoork!"
-            case ParrotType.AFRICAN:
-                return "Sqaark!"
             case ParrotType.NORWEGIAN_BLUE:
                 # todo: if 0 is modified to 1 no test breaks (atleast 1 test case is missing)
                 return "Bzzzzzz" if self._voltage > 0 else "..."
@@ -50,3 +55,19 @@ class Parrot:
     def _base_speed(self):
         # todo: magic number 12
         return 12.0
+
+class EuropeanParrot  (Parrot) :
+    def __init__(self, number_of_coconuts, voltage, nailed):
+        super().__init__(ParrotType.EUROPEAN, number_of_coconuts, voltage, nailed)
+
+    def cry(self):
+        # todo: magic strings Sqoork, Sqaark,....
+        return "Sqoork!"
+    
+class AfricanParrot  (Parrot) :
+    def __init__(self, number_of_coconuts, voltage, nailed):
+        super().__init__(ParrotType.AFRICAN, number_of_coconuts, voltage, nailed)
+        
+    def cry(self):
+        # todo: magic strings Sqoork, Sqaark,....
+        return "Sqaark!"
