@@ -25,6 +25,9 @@ def test_speed_of_african_parrot_with_two_coconuts():
     parrot = parrot_factory(ParrotType.AFRICAN, 2, 0, False)
     assert parrot.speed() == 0.0
 
+def test_class_of_african_parrot():
+    parrot = parrot_factory(ParrotType.AFRICAN, 2, 0, False)
+    assert 
 
 def test_speed_of_african_parrot_with_no_coconuts():
     parrot = parrot_factory(ParrotType.AFRICAN, 0, 0, False)
