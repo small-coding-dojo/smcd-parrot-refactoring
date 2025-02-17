@@ -20,6 +20,22 @@ def test_cry_of_african_parrot():
     parrot = parrot_factory(ParrotType.AFRICAN, 1, 0, False)
     assert parrot.cry() == "Sqaark!"
 
+def test_cry_of_base_parrot():
+    parrot = Parrot(ParrotType.AFRICAN, 1, 0, False)
+    try:
+        parrot.cry()
+        assert False
+    except NotImplementedError:
+        pass
+
+
+def test_speed_of_base_parrot():
+    parrot = Parrot(ParrotType.AFRICAN, 1, 0, False)
+    try:
+        parrot.speed()
+        assert False
+    except NotImplementedError:
+        pass    
 
 def test_speed_of_african_parrot_with_two_coconuts():
     parrot = parrot_factory(ParrotType.AFRICAN, 2, 0, False)

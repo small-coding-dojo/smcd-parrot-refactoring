@@ -28,23 +28,11 @@ class Parrot:
         self._nailed = nailed
         
 
-
     def speed(self):
-        # todo: repeated switches smell - replace conditional w/ polymorphism
-        match self._type:
-            case ParrotType.EUROPEAN:
-                return self._base_speed()
-            case ParrotType.AFRICAN:
-                return max(0, self._base_speed() - self._load_factor() * self._number_of_coconuts)
-            case ParrotType.NORWEGIAN_BLUE:
-                return 0 if self._nailed else self._compute_base_speed_for_voltage(self._voltage)
-
+        raise NotImplementedError("This parrot cannot move but it should")
+            
     def cry(self):
-        # todo: repeated switches smell - replace conditional w/ polymorphism
-        match self._type:
-            case ParrotType.NORWEGIAN_BLUE:
-                # todo: if 0 is modified to 1 no test breaks (atleast 1 test case is missing)
-                return "Bzzzzzz" if self._voltage > 0 else "..."
+        raise NotImplementedError("This parrot cannot cry but it should")
 
     def _compute_base_speed_for_voltage(self, voltage):
         # todo: magic number 24
@@ -66,6 +54,9 @@ class EuropeanParrot  (Parrot) :
         # todo: magic strings Sqoork, Sqaark,....
         return "Sqoork!"
     
+    def speed(self):
+        return self._base_speed()    
+    
 class AfricanParrot  (Parrot) :
     def __init__(self, number_of_coconuts, voltage, nailed):
         super().__init__(ParrotType.AFRICAN, number_of_coconuts, voltage, nailed)
@@ -73,6 +64,10 @@ class AfricanParrot  (Parrot) :
     def cry(self):
         # todo: magic strings Sqoork, Sqaark,....
         return "Sqaark!"
+
+    def speed(self):
+        return max(0, self._base_speed() - self._load_factor() * self._number_of_coconuts)
+
 
 
 class NorwegianBlueParrot(Parrot):
@@ -85,3 +80,6 @@ class NorwegianBlueParrot(Parrot):
             return "Bzzzzzz"
         else:
             return "..."
+        
+    def speed(self):
+        return 0 if self._nailed else self._compute_base_speed_for_voltage(self._voltage)
