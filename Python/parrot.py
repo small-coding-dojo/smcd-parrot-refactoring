@@ -13,6 +13,8 @@ def parrot_factory(type_of_parrot, number_of_coconuts, voltage, nailed):
             return EuropeanParrot(number_of_coconuts, voltage, nailed)
         case ParrotType.AFRICAN:
             return AfricanParrot(number_of_coconuts, voltage, nailed)
+        case ParrotType.NORWEGIAN_BLUE:
+            return NorwegianBlueParrot(number_of_coconuts, voltage, nailed)
         case _:
             return Parrot(type_of_parrot, number_of_coconuts, voltage, nailed)
 
@@ -71,3 +73,15 @@ class AfricanParrot  (Parrot) :
     def cry(self):
         # todo: magic strings Sqoork, Sqaark,....
         return "Sqaark!"
+
+
+class NorwegianBlueParrot(Parrot):
+    def __init__(self, number_of_coconuts, voltage, nailed):
+        super().__init__(ParrotType.NORWEGIAN_BLUE, number_of_coconuts, voltage, nailed)
+
+    def cry(self):
+        # todo: magic strings Sqoork, Sqaark,....
+        if self._voltage > 0:
+            return "Bzzzzzz"
+        else:
+            return "..."
