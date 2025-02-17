@@ -23,6 +23,7 @@ def parrot_factory(type_of_parrot, number_of_coconuts, voltage, nailed):
 class Parrot:
     minimal_voltage_speed = 24.0
     base_speed = 12.0
+    base_load_factor = 9.0
 
 
     # todo: type_of_parrot indicates that a sub-type should be present - the class may have multiple responsibilities
@@ -41,10 +42,6 @@ class Parrot:
 
     def _compute_base_speed_for_voltage(self, voltage):
         return min([Parrot.minimal_voltage_speed, voltage * Parrot.base_speed])
-
-    def _load_factor(self):
-        # todo: magic number 9
-        return 9.0
 
 
 class EuropeanParrot  (Parrot) :
@@ -67,7 +64,7 @@ class AfricanParrot  (Parrot) :
         return "Sqaark!"
 
     def speed(self):
-        return max(0, Parrot.base_speed - self._load_factor() * self._number_of_coconuts)
+        return max(0, Parrot.base_speed - self.base_load_factor * self._number_of_coconuts)
 
 
 
