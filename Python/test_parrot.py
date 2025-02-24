@@ -21,7 +21,7 @@ def test_cry_of_african_parrot():
     assert parrot.cry() == "Sqaark!"
 
 def test_cry_of_base_parrot():
-    parrot = Parrot(ParrotType.AFRICAN, 1, 0, False)
+    parrot = Parrot()
     try:
         parrot.cry()
         assert False
@@ -30,7 +30,7 @@ def test_cry_of_base_parrot():
 
 
 def test_speed_of_base_parrot():
-    parrot = Parrot(ParrotType.AFRICAN, 1, 0, False)
+    parrot = Parrot()
     try:
         parrot.speed()
         assert False

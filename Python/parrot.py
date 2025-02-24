@@ -1,9 +1,6 @@
 from enum import Enum
 
 
-
-
-# todo: using enums can cause logic errors when the enum is extended and cases are forgotten in switch statements
 class ParrotType(Enum):
     EUROPEAN = 1
     AFRICAN = 2
@@ -12,28 +9,17 @@ class ParrotType(Enum):
 def parrot_factory(type_of_parrot, number_of_coconuts, voltage, nailed):
     match type_of_parrot:
         case ParrotType.EUROPEAN:
-            return EuropeanParrot(number_of_coconuts, voltage, nailed)
+            return EuropeanParrot()
         case ParrotType.AFRICAN:
-            return AfricanParrot(number_of_coconuts, voltage, nailed)
+            return AfricanParrot(number_of_coconuts)
         case ParrotType.NORWEGIAN_BLUE:
-            return NorwegianBlueParrot(number_of_coconuts, voltage, nailed)
+            return NorwegianBlueParrot(voltage, nailed)
         case _:
-            return Parrot(type_of_parrot, number_of_coconuts, voltage, nailed)
+            return Parrot()
+
 
 class Parrot:
-    # todo: have a look where these variables are needed and pull them there
-    base_speed = 12.0
-    base_load_factor = 9.0
-
-
-    # todo: type_of_parrot indicates that a sub-type should be present - the class may have multiple responsibilities
-    # todo: we don't need all the parameters in constructor for all the parrots
-    def __init__(self, type_of_parrot, number_of_coconuts, voltage, nailed):
-        self._type = type_of_parrot
-        self._number_of_coconuts = number_of_coconuts
-        self._voltage = voltage
-        self._nailed = nailed
-        
+    _BASE_SPEED = 12.0
 
     def speed(self):
         raise NotImplementedError("This parrot cannot move but it should")
@@ -43,37 +29,42 @@ class Parrot:
 
 
 class EuropeanParrot  (Parrot) :
-    def __init__(self, number_of_coconuts, voltage, nailed):
-        super().__init__(ParrotType.EUROPEAN, number_of_coconuts, voltage, nailed)
+    # doesn't need any parameters at all
+    def __init__(self):
+        super().__init__()
 
     def cry(self):
-        # todo: magic strings Sqoork, Sqaark,....
         return "Sqoork!"
     
     def speed(self):
-        return Parrot.base_speed
-    
+        return Parrot._BASE_SPEED
+
+
 class AfricanParrot  (Parrot) :
-    def __init__(self, number_of_coconuts, voltage, nailed):
-        super().__init__(ParrotType.AFRICAN, number_of_coconuts, voltage, nailed)
-        
+    _BASE_LOAD_FACTOR = 9.0
+    
+    # needs only number of coconuts
+    def __init__(self, number_of_coconuts):
+        super().__init__()
+        self._number_of_coconuts = number_of_coconuts
+
     def cry(self):
-        # todo: magic strings Sqoork, Sqaark,....
         return "Sqaark!"
 
     def speed(self):
-        return max(0, Parrot.base_speed - self.base_load_factor * self._number_of_coconuts)
+        return max(0, Parrot._BASE_SPEED - AfricanParrot._BASE_LOAD_FACTOR * self._number_of_coconuts)
 
 
 
 class NorwegianBlueParrot(Parrot):
-    _maximum_voltage_speed = 24.0
+    _MAXIMUM_VOLTAGE_SPEED = 24.0
 
-    def __init__(self, number_of_coconuts, voltage, nailed):
-        super().__init__(ParrotType.NORWEGIAN_BLUE, number_of_coconuts, voltage, nailed)
+    def __init__(self, voltage, nailed):
+        super().__init__()
+        self._voltage = voltage
+        self._nailed = nailed
 
     def cry(self):
-        # todo: magic strings Sqoork, Sqaark,....
         if self._voltage > 0:
             return "Bzzzzzz"
         else:
@@ -83,4 +74,4 @@ class NorwegianBlueParrot(Parrot):
         return 0 if self._nailed else self._compute_base_speed_for_voltage(self._voltage)
 
     def _compute_base_speed_for_voltage(self, voltage):
-        return min([self._maximum_voltage_speed, voltage * Parrot.base_speed])
+        return min([self._MAXIMUM_VOLTAGE_SPEED, voltage * Parrot._BASE_SPEED])
