@@ -22,7 +22,8 @@ class Parrot:
         # Switch case executes specific logic for individual types of parrots
         match self._type:
             case ParrotType.EUROPEAN:
-                return self._base_speed()
+                parrot = EuropeanParrot(self._type, self._number_of_coconuts, self._voltage, self._nailed)
+                return parrot.speed()
             case ParrotType.AFRICAN:
                 return max(0, self._base_speed() - self._load_factor() * self._number_of_coconuts)
             case ParrotType.NORWEGIAN_BLUE:
@@ -49,3 +50,12 @@ class Parrot:
 
     def _base_speed(self):
         return 12.0
+    
+
+class EuropeanParrot (Parrot):
+    def __init__(self, type_of_parrot, number_of_coconuts, voltage, nailed):
+        super().__init__( type_of_parrot, number_of_coconuts, voltage, nailed)
+    
+    def speed(self):
+        return self._base_speed()
+    
