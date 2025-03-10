@@ -18,19 +18,22 @@ class Parrot:
         self._nailed = nailed
 
     def speed(self):
+        sub_parrot = self.get_sub_parrot()
+        return sub_parrot.speed()
+
+    def get_sub_parrot(self):
         # Switch case is duplicate - makes it hard to add more parrot types
         # Switch case executes specific logic for individual types of parrots
+        # Implement and test default case
         match self._type:
             case ParrotType.EUROPEAN:
-                parrot = EuropeanParrot(self._type, self._number_of_coconuts, self._voltage, self._nailed)
-                return parrot.speed()
+                sub_parrot = EuropeanParrot(self._type, self._number_of_coconuts, self._voltage, self._nailed)
             case ParrotType.AFRICAN:
-                parrot = AfricanParrot( number_of_coconuts = self._number_of_coconuts )
-                return parrot.speed()
+                sub_parrot = AfricanParrot(number_of_coconuts=self._number_of_coconuts)
             case ParrotType.NORWEGIAN_BLUE:
-                # We dislike the single line if .. else .. construct
-                return 0 if self._nailed else self._compute_base_speed_for_voltage(self._voltage)
-    
+                sub_parrot = NorwegianParrot(self._voltage, self._nailed)
+        return sub_parrot
+
     def cry(self):
         match self._type:
             case ParrotType.EUROPEAN:
@@ -66,3 +69,13 @@ class AfricanParrot (Parrot):
 
     def _load_factor(self):
         return 9.0
+
+
+class NorwegianParrot (Parrot):
+    def __init__(self, voltage, nailed):
+        self._nailed = nailed
+        self._voltage = voltage
+
+    def speed(self):
+        # We dislike the single line if .. else .. construct
+        return 0 if self._nailed else self._compute_base_speed_for_voltage(self._voltage)
