@@ -35,14 +35,8 @@ class Parrot:
         return sub_parrot
 
     def cry(self):
-        match self._type:
-            case ParrotType.EUROPEAN:
-                return "Sqoork!"
-            case ParrotType.AFRICAN:
-                return "Sqaark!"
-            case ParrotType.NORWEGIAN_BLUE:
-                # We dislike the single line if .. else .. construct
-                return "Bzzzzzz" if self._voltage > 0 else "..."
+        sub_parrot = self.get_sub_parrot()
+        return sub_parrot.cry()
 
     # This method is only required for the NORWEGIAN_BLUE parrot
     def _compute_base_speed_for_voltage(self, voltage):
@@ -58,7 +52,10 @@ class EuropeanParrot (Parrot):
     
     def speed(self):
         return self._base_speed()
-    
+
+    def cry(self):
+        return "Sqoork!"
+
 
 class AfricanParrot (Parrot):
     def __init__(self, number_of_coconuts):
@@ -70,6 +67,9 @@ class AfricanParrot (Parrot):
     def _load_factor(self):
         return 9.0
 
+    def cry(self):
+        return "Sqaark!"
+
 
 class NorwegianParrot (Parrot):
     def __init__(self, voltage, nailed):
@@ -79,3 +79,6 @@ class NorwegianParrot (Parrot):
     def speed(self):
         # We dislike the single line if .. else .. construct
         return 0 if self._nailed else self._compute_base_speed_for_voltage(self._voltage)
+
+    def cry(self):
+        return "Bzzzzzz" if self._voltage > 0 else "..."
