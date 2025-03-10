@@ -27,7 +27,7 @@ class Parrot:
         # Implement and test default case
         match self._type:
             case ParrotType.EUROPEAN:
-                sub_parrot = EuropeanParrot(self._type, self._number_of_coconuts, self._voltage, self._nailed)
+                sub_parrot = EuropeanParrot()
             case ParrotType.AFRICAN:
                 sub_parrot = AfricanParrot(number_of_coconuts=self._number_of_coconuts)
             case ParrotType.NORWEGIAN_BLUE:
@@ -46,10 +46,7 @@ class Parrot:
         return 12.0
     
 
-class EuropeanParrot (Parrot):
-    def __init__(self, type_of_parrot, number_of_coconuts, voltage, nailed):
-        super().__init__( type_of_parrot, number_of_coconuts, voltage, nailed)
-    
+class EuropeanParrot ():
     def speed(self):
         return self._base_speed()
 
