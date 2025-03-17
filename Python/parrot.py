@@ -16,10 +16,10 @@ class Parrot:
         self._number_of_coconuts = number_of_coconuts
         self._voltage = voltage
         self._nailed = nailed
-
+        self._sub_parrot = self.get_sub_parrot()
+ 
     def speed(self):
-        sub_parrot = self.get_sub_parrot()
-        return sub_parrot.speed()
+         return self._sub_parrot.speed()
 
     def get_sub_parrot(self):
         # Switch case is duplicate - makes it hard to add more parrot types
@@ -35,8 +35,7 @@ class Parrot:
         return sub_parrot
 
     def cry(self):
-        sub_parrot = self.get_sub_parrot()
-        return sub_parrot.cry()
+         return self._sub_parrot.cry()
 
     # This method is only required for the NORWEGIAN_BLUE parrot
     def _compute_base_speed_for_voltage(self, voltage):
