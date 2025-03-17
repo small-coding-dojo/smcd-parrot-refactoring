@@ -9,6 +9,12 @@ class ParrotType(Enum):
 
 class Parrot:
 
+    def __new__(cls, *args, **kwargs):
+        # If the ctor is used by client code, then the object construction is hard to change
+        # Wenn der ctor direkt verwendet wird, wird Client Code schwer zu ändern
+        # Meta Programming in python is possible but hard to understand
+        return super().__new__(AfricanParrot)
+
     def __init__(self, type_of_parrot, number_of_coconuts, voltage, nailed):
         # This class has three reasons for change (single responsibility violated)
         # Some variables are only required by subtypes of a parrot
@@ -57,6 +63,7 @@ class EuropeanParrot (Parrot):
 
 
 class AfricanParrot (Parrot):
+
     def __init__(self, number_of_coconuts):
         self._number_of_coconuts = number_of_coconuts
 
