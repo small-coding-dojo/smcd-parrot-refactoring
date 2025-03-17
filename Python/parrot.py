@@ -29,7 +29,7 @@ class Parrot:
             case ParrotType.EUROPEAN:
                 sub_parrot = EuropeanParrot()
             case ParrotType.AFRICAN:
-                sub_parrot = AfricanParrot(number_of_coconuts=self._number_of_coconuts)
+                sub_parrot = AfricanParrot(self._number_of_coconuts)
             case ParrotType.NORWEGIAN_BLUE:
                 sub_parrot = NorwegianParrot(self._voltage, self._nailed)
         return sub_parrot
@@ -48,7 +48,7 @@ class Parrot:
 
 class EuropeanParrot (Parrot):
     def __init__(self):
-        super().__init__(ParrotType.EUROPEAN,0,0,0)
+        pass
 
     def speed(self):
         return self._base_speed()
@@ -59,10 +59,10 @@ class EuropeanParrot (Parrot):
 
 class AfricanParrot (Parrot):
     def __init__(self, number_of_coconuts):
-        self._number_of_coconuts2 = number_of_coconuts
+        self._number_of_coconuts = number_of_coconuts
 
     def speed(self):
-        return max(0, self._base_speed() - self._load_factor() * self._number_of_coconuts2)
+        return max(0, self._base_speed() - self._load_factor() * self._number_of_coconuts)
 
     def _load_factor(self):
         return 9.0
