@@ -65,13 +65,16 @@ class NorwegianBlueParrot(Parrot):
         self._nailed = nailed
 
     def cry(self):
+        result = "..."
         if self._voltage > 0:
-            return "Bzzzzzz"
-        else:
-            return "..."
+            result = "Bzzzzzz"
+        return result
         
     def speed(self):
-        return 0 if self._nailed else self._compute_base_speed_for_voltage(self._voltage)
+        result = 0
+        if not self._nailed:
+            result = self._compute_base_speed_for_voltage(self._voltage)
+        return result
 
     def _compute_base_speed_for_voltage(self, voltage):
         return min([self._MAXIMUM_VOLTAGE_SPEED, voltage * Parrot._BASE_SPEED])
